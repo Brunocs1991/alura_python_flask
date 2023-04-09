@@ -1,11 +1,11 @@
-from flask import Flask
+from flask import Flask, render_template
 
 app = Flask(__name__)
 
 
 @app.route('/inicio')
 def ola():
-    return '<h1>Ola mundo!</h1>'
+    return render_template('lista.html')
 
 
-app.run()
+app.run(host='0.0.0.0', port=8080)
