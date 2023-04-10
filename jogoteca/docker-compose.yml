@@ -1,0 +1,7 @@
+version: "3"
+services:
+  web:
+    build: ./app
+    container_name: "Flask_App"
+    ports:
+      - 80:8080
