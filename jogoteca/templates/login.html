@@ -5,8 +5,9 @@
     <input type="hidden" name="proxima" value="{{ proxima }}">
     <p><label>Nome de usuário:</label> <input class="form-control" type="text" name="usuario" required></p>
     <p><label>Senha:</label> <input class="form-control" type="password" name="senha" required></p>
-    <p>
-        <button class="btn btn-primary" type="submit">Entrar</button>
-    </p>
+    <div class="pt-5 d-flex justify-content-end">
+        <a type="button" class="btn btn-outline-primary mx-3" href={{url_for('index')}}>Inicio</a>
+        <button class="btn  btn-outline-success" type="submit">Logar</button>
+    </div>
 </form>
 {% endblock %}

@@ -19,4 +19,12 @@
     {% endfor %}
     </tbody>
 </table>
+<div class="pt-5 d-flex justify-content-end">
+
+
+    <a type="button" class="btn btn-outline-primary mx-1" href={{url_for('novo')}}>Novo</a>
+    {% if session['usuario_logado'] %}
+    <a type="button" class="btn btn-outline-danger mx-1" href="{{url_for('logout')}}">Deslogar</a>
+    {%endif%}
+</div>
 {% endblock %}

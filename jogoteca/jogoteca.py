@@ -8,6 +8,21 @@ class Jogo:
         self.console = console
 
 
+class Usuario:
+    def __init__(self, nome, nickname, senha):
+        self.nome = nome
+        self.nickname = nickname
+        self.senha = senha
+
+
+usuario1 = Usuario("Bruno Costa e Silva", "bruno", "alohomora")
+usuario2 = Usuario("TESTE01", "T01", "T01")
+usuario3 = Usuario("TESTE02", "T02", "T02")
+
+usuarios = {usuario1.nickname: usuario1,
+            usuario2.nickname: usuario2,
+            usuario3.nickname: usuario3}
+
 jogo1 = Jogo('Tetris', 'Puzzle', 'Atari')
 jogo2 = Jogo('God of war', 'Rack n Slash', 'PS2')
 jogo3 = Jogo('Mortal Kombat', 'Luta', 'PS2')
@@ -24,7 +39,7 @@ def index():
 
 @app.route('/novo')
 def novo():
-    if 'usuario_logado' not in session or session['usuario_logado'] is None:
+    if logado():
         return redirect(url_for('login', proxima=url_for('novo')))
     return render_template('novo.html', titulo='Novo Jogo')
 
@@ -49,11 +64,13 @@ def login():
 
 @app.route('/autenticar', methods=['POST', ])
 def autenticar():
-    if 'alohomora' == request.form['senha']:
-        session['usuario_logado'] = request.form['usuario']
-        flash(session['usuario_logado'] + ' logou com sucesso! ')
-        proxima_pagina = request.form['proxima']
-        return redirect(proxima_pagina)
+    if request.form['usuario'] in usuarios:
+        usuario = usuarios[request.form['usuario']]
+        if request.form['senha'] == usuario.senha:
+            session['usuario_logado'] = usuario.nickname
+            flash(usuario.nickname + ' logado com sucesso!')
+            proxima_pagina = request.form['proxima']
+            return redirect(proxima_pagina)
     else:
         flash('Usuário não logado.')
         return redirect(url_for('login'))
@@ -64,6 +81,10 @@ def logout():
     session['usuario_logado'] = None
     flash('Logout efetuado com sucesso!')
     return redirect(url_for('index'))
+
+
+def logado():
+    return 'usuario_logado' not in session or session['usuario_logado'] is None
 
 
 app.run(host='0.0.0.0', port=8080, debug=True)
